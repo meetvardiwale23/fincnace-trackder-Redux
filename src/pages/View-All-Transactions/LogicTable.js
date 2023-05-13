@@ -3,23 +3,22 @@ import React, { useContext, useEffect } from "react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { GlobalData } from "../../context/FormData";
-// // stpes for sorting
-// make empty state for sotring the data of props
-// make the another state for the sorting keep cloumn name ad order in that state
-// notes always clone the state data before using it
-
-//todays lernings
-// fill method this mesthod is use to fill the value insdie the array
-// eg arr.fil(0) output will be the [0,0,0]
+import { useSelector } from "react-redux";
+import { deleteTransactions } from "../../app/Transactions.duck";
+import { useDispatch } from "react-redux";
 
 export const LogicTable = ({ data, search }) => {
+  // set dispatch method to call the actions in reducers
+  const dispatch = useDispatch();
   //set the naivagte varaible
 
-  console.log("data after group by", data);
   const searchField = search.searchString;
 
   //use of the context data
-  const { getData, setData } = useContext(GlobalData);
+  //const { getData, setData } = useContext(GlobalData);
+
+  //get the redux data
+  const transactioData = useSelector((state) => state.transactions.value);
 
   //show the recordes per page
   let recordPerPage = 2;
@@ -31,7 +30,7 @@ export const LogicTable = ({ data, search }) => {
 
   //set turn for the array
 
-  const [propData, setPropsData] = useState([]);
+  const [propData, setPropsData] = useState(transactioData);
   const [filterData, setfilterdata] = useState([]);
   const [currentPage, setcurrentPage] = useState(0);
   const [sorting, setSorting] = useState({
@@ -146,7 +145,7 @@ export const LogicTable = ({ data, search }) => {
   };
 
   function handlerSearch() {
-    const globalData = [...data];
+    const globalData = [...transactioData];
 
     const searchData = globalData.filter((itemsFound) => {
       if (searchField && searchField !== "") {
@@ -187,23 +186,12 @@ export const LogicTable = ({ data, search }) => {
 
   // delete
   const deleteID = (e) => {
-    //console.log("delete id", );
     const delID = e.target.id;
-    const deleteData = getData.filter((data) => {
-      return data.id !== Number(delID);
-    });
-    //console.log("grouped by data", data);
-    // console.log({ data }, { deleteData });
-
-    setData(deleteData);
-    setPropsData(getData);
+    console.log(e.target.id);
+    dispatch(deleteTransactions(delID));
   };
 
   useEffect(() => {
-    // let groupedObject = [...data];
-
-    // const resut = groupedObject;
-
     const resut = data.map((dataArr) => {
       return dataArr;
     });

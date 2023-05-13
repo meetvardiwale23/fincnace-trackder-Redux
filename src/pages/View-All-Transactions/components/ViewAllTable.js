@@ -1,28 +1,20 @@
 import React, { useContext, useEffect, useState } from "react";
 import { LogicTable } from "../LogicTable";
 import { useNavigate } from "react-router-dom";
-import { localStorage } from "../localstorage";
-import { GlobalData } from "../../../context/FormData";
-//import Nodata from "../../No Data Found/components/Nodata";
-
-// import all the arrays
-//import { months,transactionTypeArr,fromAccount } from "../../Transaction Form/components/TransacForm";
+import { useSelector } from "react-redux";
+import { makeTransactions } from "../../../app/Transactions.duck";
 
 export const ViewAllTable = () => {
+  // get the data from the redux
+  const transactioData = useSelector((state) => state.transactions.value);
+  console.log("================", transactioData);
+
+  //console.log("transaction data from redux", transactioData);
+
   const navigate = useNavigate();
-  //first get the local storage data
 
-  // use data of context
-  const { getData, setData } = useContext(GlobalData);
-
-  // console.log("get data in viewall table pages", getData);
-
-  const storageData = localStorage;
-
-  const [maindata, setMainData] = useState(getData);
   const [orderBy, setOrderBy] = useState([]);
   const [globalKey, setGlobalKey] = useState("");
-  const [groupByTitle, setGroupByTitle] = useState();
   const [searchData, setSearchData] = useState([
     {
       searchString: "",
@@ -36,7 +28,7 @@ export const ViewAllTable = () => {
 
     const selectedValue = e.target.value;
 
-    const result = getData.reduce((a, b) => {
+    const result = transactioData.reduce((a, b) => {
       a[b[selectedValue]] = a[b[selectedValue]] || [];
       a[b[selectedValue]].push(b);
       return a;
@@ -52,7 +44,7 @@ export const ViewAllTable = () => {
   useEffect(() => {
     let finalData = [];
 
-    const result = getData.reduce((a, b) => {
+    const result = transactioData.reduce((a, b) => {
       a[b[globalKey]] = a[b[globalKey]] || [];
       a[b[globalKey]].push(b);
       return a;
@@ -63,7 +55,7 @@ export const ViewAllTable = () => {
     });
 
     setOrderBy(finalData);
-  }, [getData]);
+  }, [transactioData]);
 
   // handle search function
   const handlerSearch = (val) => {
@@ -140,7 +132,7 @@ export const ViewAllTable = () => {
           <LogicTable key={index} data={groupData} search={searchData} />
         ))
       ) : (
-        <LogicTable data={getData} search={searchData} />
+        <LogicTable data={transactioData} search={searchData} />
       )}
 
       {/* <SingleTable data={maindata} />} /> */}

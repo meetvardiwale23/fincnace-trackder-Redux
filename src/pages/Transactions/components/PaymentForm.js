@@ -9,6 +9,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { GlobalData } from "../../../context/FormData";
 import { useLocation, useNavigate } from "react-router-dom";
+import { makeTransactions } from "../../../app/Transactions.duck";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+
+//validation schema
 const schema = yup.object().shape({
   date: yup.string().required("Transaction Date is required"),
   monthYear: yup.string().required("Month Year is required"),
@@ -32,6 +37,11 @@ const schema = yup.object().shape({
 });
 
 export const PaymentForm = () => {
+  // useSelector method to access the redux data
+  const transactioData = useSelector((state) => state.transactions.value);
+  //use dispatch method for react
+  const dispatch = useDispatch();
+
   //get state id for the edit
   const { state } = useLocation();
 
@@ -48,26 +58,7 @@ export const PaymentForm = () => {
     receipt: "",
     notes: "",
   });
-  const { getData, setData } = useContext(GlobalData);
-
-  // code to checkt the id
-  // const newData = [
-  //   { id: 1, name: "meet" },
-  //   { id: 2, name: "tushar" },
-  //   { id: 3, name: "naresh" },
-  // ];
-  // setData([...getData, newData]);
-
-  //set id
-  // useEffect(() => {
-  //   const newId = new Date().getTime();
-
-  //   setFormValues((formData) => ({
-  //     ...formData,
-  //     id: newId,
-  //   }));
-
-  // }, []);
+  //  const { getData, setData } = useContext(GlobalData);
 
   const values = fomrValues;
   const {
@@ -105,27 +96,29 @@ export const PaymentForm = () => {
 
     if (state) {
       alert("we will edit this");
-      const getIndex = getData.findIndex((index) => {
+      const getIndex = transactioData.findIndex((index) => {
         return index.id === state;
       });
 
-      getData[getIndex] = newObject;
+      transactioData[getIndex] = newObject;
 
-      setData([...getData]);
+      dispatch(makeTransactions(newObject));
+      // setData([...getData]);
       navigate("/allTransaction");
       return;
     }
 
     newObject["id"] = new Date().getTime();
 
-    setData([...getData, newObject]);
+    dispatch(makeTransactions(newObject));
+    // setData([...getData, newObject]);
     navigate("/allTransaction");
   };
 
   // handle the edit the data
   const handleEdit = (id) => {
     // find the array from the globa context data and paste into the form
-    const editData = getData.find((data) => {
+    const editData = transactioData.find((data) => {
       return data.id === state;
     });
 
