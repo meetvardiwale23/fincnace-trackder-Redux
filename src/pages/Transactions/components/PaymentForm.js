@@ -10,6 +10,7 @@ import * as yup from "yup";
 import { GlobalData } from "../../../context/FormData";
 import { useLocation, useNavigate } from "react-router-dom";
 import { makeTransactions } from "../../../app/Transactions.duck";
+import { editTransactions } from "../../../app/Transactions.duck";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
@@ -49,14 +50,14 @@ export const PaymentForm = () => {
 
   const [fomrValues, setFormValues] = useState({
     id: "",
-    transactionDate: "",
-    monthYear: "",
-    transactionType: "",
-    fromAccount: "",
-    toAccount: "",
-    amount: "",
+    transactionDate: "2023-05-28",
+    monthYear: "Jul 2023",
+    transactionType: "Personal Leaving",
+    fromAccount: "Full Circle ",
+    toAccount: "My Dream Home",
+    amount: 145,
     receipt: "",
-    notes: "",
+    notes: "parths  ",
   });
   //  const { getData, setData } = useContext(GlobalData);
 
@@ -96,15 +97,25 @@ export const PaymentForm = () => {
 
     if (state) {
       alert("we will edit this");
-      const getIndex = transactioData.findIndex((index) => {
-        return index.id === state;
-      });
+      
 
-      transactioData[getIndex] = newObject;
+      dispatch(editTransactions({index :state , data : {...newObject   }}))
+      // const getIndex = [...transactioData].findIndex((index) => {
+      //   return index.id === state;
+      // });
 
-      dispatch(makeTransactions(newObject));
+      // console.log("getIndex of Transaction", getIndex);
+      // console.log("transaction data", transactioData[getIndex]);
+      
+      // console.log("transaction edited data", transactioData);
+      // console.log("newObject", newObject);
+      // transactioData[getIndex]  = newObject;
+
+      
+      
+      // dispatch(editTransactions(newObject));
       // setData([...getData]);
-      navigate("/allTransaction");
+    navigate("/allTransaction");
       return;
     }
 
