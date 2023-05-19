@@ -1,4 +1,4 @@
-import { createSlice, current } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { localStorage } from "../pages/View-All-Transactions/localstorage";
 
 const initialState = { value: [] };
@@ -8,6 +8,26 @@ export const transactionSlice = createSlice({
   reducers: {
     makeTransactions: (state, action) => {
       state.value.push(action.payload);
+    },
+
+    editTransactions: (state, action) => {
+      const { index, data } = action.payload;
+      console.log("inside the edit redux", { index }, { data });
+
+      const getIndex = state.value.findIndex((newIndex) => {
+        return newIndex.id === index;
+      });
+
+      let newObject = state.value;
+
+      newObject[getIndex] = data;
+
+      console.log("get index", getIndex, "data", data);
+
+      // return {
+      //   ...state,
+      //   value: newObject,
+      // };
     },
 
     deleteTransactions: (state, action) => {

@@ -5,11 +5,12 @@ import {
   allAccountsOptions,
   transactionTypeOptions,
 } from "../../../utils/ConstantValues";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
+  import { yupResolver } from "@hookform/resolvers/yup";
+  import * as yup from "yup";
 import { GlobalData } from "../../../context/FormData";
 import { useLocation, useNavigate } from "react-router-dom";
 import { makeTransactions } from "../../../app/Transactions.duck";
+import { editTransactions } from "../../../app/Transactions.duck";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
@@ -42,7 +43,7 @@ export const PaymentForm = () => {
   //use dispatch method for react
   const dispatch = useDispatch();
 
-  //get state id for the edit
+    //get state id for the edit
   const { state } = useLocation();
 
   const navigate = useNavigate();
@@ -95,14 +96,8 @@ export const PaymentForm = () => {
     let newObject = { ...fomrValues, ...data };
 
     if (state) {
-      alert("we will edit this");
-      const getIndex = transactioData.findIndex((index) => {
-        return index.id === state;
-      });
-
-      transactioData[getIndex] = newObject;
-
-      dispatch(makeTransactions(newObject));
+       alert("we will edit this");
+      dispatch(editTransactions({ index: state, data: newObject }));
       // setData([...getData]);
       navigate("/allTransaction");
       return;

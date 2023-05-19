@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { GlobalData } from "../../context/FormData";
 import { useSelector } from "react-redux";
 import { deleteTransactions } from "../../app/Transactions.duck";
+import { editTransactions } from "../../app/Transactions.duck";
 import { useDispatch } from "react-redux";
 
 export const LogicTable = ({ data, search }) => {
