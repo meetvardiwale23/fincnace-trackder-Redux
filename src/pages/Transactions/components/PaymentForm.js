@@ -50,14 +50,14 @@ export const PaymentForm = () => {
 
   const [fomrValues, setFormValues] = useState({
     id: "",
-    transactionDate: "2023-05-28",
-    monthYear: "Jul 2023",
-    transactionType: "Personal Leaving",
-    fromAccount: "Full Circle ",
-    toAccount: "My Dream Home",
-    amount: 145,
+    transactionDate: "",
+    monthYear: "",
+    transactionType: "",
+    fromAccount: "",
+    toAccount: "",
+    amount: "",
     receipt: "",
-    notes: "parths  ",
+    notes: "",
   });
   //  const { getData, setData } = useContext(GlobalData);
 
