@@ -7,7 +7,7 @@ import { makeTransactions } from "../../../app/Transactions.duck";
 export const ViewAllTable = () => {
   // get the data from the redux
   const transactioData = useSelector((state) => state.transactions.value);
-  console.log("================", transactioData);
+  // console.log("================", transactioData);
 
   //console.log("transaction data from redux", transactioData);
 

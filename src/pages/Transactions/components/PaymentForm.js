@@ -5,8 +5,8 @@ import {
   allAccountsOptions,
   transactionTypeOptions,
 } from "../../../utils/ConstantValues";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
+  import { yupResolver } from "@hookform/resolvers/yup";
+  import * as yup from "yup";
 import { GlobalData } from "../../../context/FormData";
 import { useLocation, useNavigate } from "react-router-dom";
 import { makeTransactions } from "../../../app/Transactions.duck";
@@ -43,7 +43,7 @@ export const PaymentForm = () => {
   //use dispatch method for react
   const dispatch = useDispatch();
 
-  //get state id for the edit
+    //get state id for the edit
   const { state } = useLocation();
 
   const navigate = useNavigate();
@@ -96,24 +96,8 @@ export const PaymentForm = () => {
     let newObject = { ...fomrValues, ...data };
 
     if (state) {
-      alert("we will edit this");
-      
-
-      dispatch(editTransactions({index :state , data : {...newObject   }}))
-      // const getIndex = [...transactioData].findIndex((index) => {
-      //   return index.id === state;
-      // });
-
-      // console.log("getIndex of Transaction", getIndex);
-      // console.log("transaction data", transactioData[getIndex]);
-      
-      // console.log("transaction edited data", transactioData);
-      // console.log("newObject", newObject);
-      // transactioData[getIndex]  = newObject;
-
-      
-      
-      // dispatch(editTransactions(newObject));
+       alert("we will edit this");
+      dispatch(editTransactions({ index: state, data: newObject }));
       // setData([...getData]);
     navigate("/allTransaction");
       return;

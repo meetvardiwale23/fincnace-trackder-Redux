@@ -4,6 +4,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ViewAllTable } from "./pages/View-All-Transactions/components/ViewAllTable";
 import { ProviderFunction } from "./context/FormData";
 import { Fragment } from "react";
+import { Login } from "./pages/Authentication/Login/components/Login";
+import { Register } from "./pages/Authentication/Register/components/Register";
 import store from "./app/store";
 import { Provider } from "react-redux";
 
@@ -28,6 +30,8 @@ function App() {
           <Routes>
             <Route path="/makePayment" element={<PaymentForm />} />
             <Route path="/allTransaction" element={<ViewAllTable />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
           </Routes>
         </Provider>
       </BrowserRouter>
