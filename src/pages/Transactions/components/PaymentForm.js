@@ -59,6 +59,8 @@ export const PaymentForm = () => {
     receipt: "",
     notes: "",
   });
+
+  const [image ,setImage] = useState()
   //  const { getData, setData } = useContext(GlobalData);
 
   const values = fomrValues;
@@ -88,12 +90,15 @@ export const PaymentForm = () => {
     const getFile = e.target.files[0];
     const base64 = await convertBase64(getFile);
 
-    setFormValues({ ...fomrValues, receipt: base64 });
+    setImage(base64);
+    // setFormValues({ ...fomrValues, receipt: base64 });
   };
 
   //handle registration sumit data
   const handleRegistration = (data) => {
-    let newObject = { ...fomrValues, ...data };
+    let newObject = { ...fomrValues, ...data , receipt : image };
+
+    console.log("new object", newObject);
 
     if (state) {
        alert("we will edit this");

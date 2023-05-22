@@ -3,11 +3,13 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { userLoggedIn } from "../../../../app/userAuth.Duck";
+import { setCredentials } from "../../../../app/userAuth.Duck";
 import { useDispatch } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useSelector } from "react-redux";
-import cookie from "react-cookies";
+import Cookies from "js-cookie";
+
 
 const schema = yup.object().shape({
   email: yup
@@ -22,25 +24,23 @@ const schema = yup.object().shape({
     .max(10, "your password lenght must be between 5-10 character length"),
 });
 
-const cookieToken = cookie.save("token", "this is the new cookie");
-console.log("cookie token", cookieToken);
 export const Login = () => {
   //use all the packages here
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   // is user logged in
-  const isUserLoggedIn = useSelector(
-    (state) => state.userRegisterAuth.isLoggedIn
-  );
+  // const isUserLoggedIn = useSelector(
+  //   (state) => state.userRegisterAuth.isLoggedIn
+  // );
 
-  console.log("is user logged in", isUserLoggedIn);
+  // console.log("is user logged in", isUserLoggedIn);
 
-  useEffect(() => {
-    if (isUserLoggedIn) {
-      navigate("/allTransaction");
-    }
-  });
+  // useEffect(() => {
+  //   if (isUserLoggedIn) {
+      
+  //   }
+  // },[]);
 
   // const [userLogin, setUserLogin] =  useState({
   //   email : "",
@@ -128,6 +128,9 @@ export const Login = () => {
     console.log("login data", data);
 
     dispatch(userLoggedIn(data));
+    Cookies.set("user","loggedInTrue");
+    dispatch(setCredentials(true))
+    navigate("/allTransaction");
   };
 
   return (
