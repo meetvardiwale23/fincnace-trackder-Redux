@@ -9,6 +9,7 @@ import { Register } from "./pages/Authentication/Register/components/Register";
 import store from "./app/store";
 import { Provider } from "react-redux";
 import { ProtectedComponents } from "./pages/Auth Gard/ProtectedComponents";
+import { HomePage } from "./pages/Home page/homePage";
 
 function App() {
   return (
@@ -29,7 +30,7 @@ function App() {
       <BrowserRouter>
         <Provider store={store}>
           <Routes>
-           
+          <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="*" element={<ProtectedComponents />} />
